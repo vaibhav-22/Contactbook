@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import con.axelor.app.db.Contact;
+import com.axelor.app.db.Contact;
 
 public class AppTest {
 	Client client;

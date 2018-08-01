@@ -10,7 +10,7 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 
-import con.axelor.app.db.Contact;
+import com.axelor.app.db.Contact;
 
 @Singleton
 public class ContactbookServiceImpl implements ContactbookService{
@@ -20,10 +20,9 @@ public class ContactbookServiceImpl implements ContactbookService{
 	
 	@Override
 	@Transactional
-	public Contact createNewContact(Contact c) {
+	public void createNewContact(Contact c) {
 		EntityManager em = emp.get();
 		em.persist(c);
-		return c;
 	}
 	
 	@Override
@@ -37,11 +36,11 @@ public class ContactbookServiceImpl implements ContactbookService{
 	
 	@Override
 	@Transactional
-	public boolean updateContact(int id, Contact contact) {
+	public boolean updateContact(int id, String name, long number) {
 		EntityManager em = emp.get();
 		Contact c = em.find(Contact.class,id);
-		c.setName(contact.getName());
-		c.setNumber(contact.getNumber());		
+		c.setName(name);
+		c.setNumber(number);		
 		return true;
 	}
 	
@@ -57,7 +56,7 @@ public class ContactbookServiceImpl implements ContactbookService{
 	@Transactional
 	public List<Contact> displayAllContact() {
 		EntityManager em = emp.get();
-		Query query =  em.createQuery("Select c from Contact c");
+		Query query =  em.createQuery("Select c from Contact c order by c.id asc");
 		List<Contact> contactList = (List<Contact>)query.getResultList();
 		return contactList;
 	}

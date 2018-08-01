@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="contactbook.AppTest" tests="10" skipped="10" failures="0" errors="0" timestamp="2018-07-25T11:20:46" hostname="localhost.localdomain" time="0.004">
+  <properties/>
+  <testcase name="displayContactByJson" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="deleteByJson" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="deleteByXml" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="displayAllContactByXml" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="insertByXml" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="updateContactByJson" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="insertByJson" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="updateContactByXml" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="displayAllContactByJson" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="displayContactByXml" classname="contactbook.AppTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

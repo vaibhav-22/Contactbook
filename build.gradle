@@ -26,5 +26,10 @@ dependencies{
     compile group: 'org.jboss.resteasy', name: 'resteasy-jackson-provider', version: '3.6.0.Final'
 	compile group: 'org.jboss.resteasy', name: 'resteasy-jaxb-provider', version: '3.6.0.Final'
 	
-    
+    compile group: 'org.jboss.resteasy', name: 'resteasy-html', version: '3.6.0.Final'
+ 	// https://mvnrepository.com/artifact/javax.servlet/jstl
+	compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+	// https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl-api
+	compile group: 'javax.servlet.jsp.jstl', name: 'jstl-api', version: '1.2'
+	    
 }

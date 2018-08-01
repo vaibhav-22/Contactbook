@@ -1,80 +1,76 @@
 package com.axelor.app;
 
+import java.io.IOException;
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+
+import org.jboss.resteasy.plugins.providers.html.View;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import con.axelor.app.db.Contact;
+import com.axelor.app.db.Contact;
 
 @Singleton
-@Path("/contact")
+@Path("/")
 public class ContactbookResources {
+	
 	
 	@Inject
 	ContactbookService contactbookService;
 	
-	@POST
-	@Produces({"application/json,text/xml"})
-	@Consumes({"application/json,text/xml"})
-	public Contact addContact(Contact c) {			
-		Contact contact = contactbookService.createNewContact(c);
-		return contact;
-	}
-	
-	@DELETE
-	@Path("/{id}")
-	@Produces({"application/json","text/xml"})
-	@Consumes({"application/json","text/xml"})
-	public boolean deleteContact(@PathParam("id") int id) {
-		boolean result = contactbookService.deleteContact(id);
-		return result;
-	}
-	
-	@PUT
-	@Path("/{id}")
-	@Produces({"application/json","text/xml"})
-	@Consumes({"application/json","text/xml"})
-	public boolean updateContact(@PathParam("id") String id, Contact c) {
+	@GET
+	public View displayAllContact(@Context HttpServletRequest request, @Context HttpServletResponse response) throws IOException {
 		
-		int contactId = Integer.parseInt(id); 
-		boolean response = contactbookService.updateContact(contactId,c);
-		return response;
-	}
+		List<Contact> contactList = contactbookService.displayAllContact();	
+		return new View("/index.jsp",contactList,"contactList");		
+	} 
 	
-	/* @GET
-	@Path("/{id}")
-	@Produces({"text/xml"})
-	public Contact displayContact(@PathParam("id") int id) {
-		Contact contact = contactbookService.displayContact(id);
-		return contact;
-	} */
+	@POST
+	@Path("/createNewContact")
+	public void addContact(@FormParam("name") String name, @FormParam("number") long number,@Context HttpServletRequest request,@Context HttpServletResponse response) throws IOException {	
+		Contact contact = new Contact();
+		contact.setName(name);
+		contact.setNumber(number);
+		contactbookService.createNewContact(contact);	
+	    response.sendRedirect(request.getContextPath());
+	}
 	
 	@GET
-	@Produces({"application/xml"})
-	//@Consumes({"application/json","text/xml"})
-	public List<Contact> displayAllContact() {
-		
-		List<Contact> contactList = contactbookService.displayAllContact();
-				
-		return contactList;
-		
-	}
+	@Path("/delete/{id}")
+	public void deleteContact(@PathParam("id") int id,@Context HttpServletRequest request,@Context HttpServletResponse response) throws IOException {
+		contactbookService.deleteContact(id);
+		response.sendRedirect(request.getContextPath());
+    }
 	
-/*	@POST
-	@Consumes({"application/json,text/xml"})
-	@Produces({"application/json","text/xml"})	
-	public List<Contact> searchContactByName(String name){
+	@POST
+	@Path("/updateContact")
+	public void updateContact(@FormParam("id") int id, @FormParam("name") String name, @FormParam("number") long number,@Context HttpServletRequest request,@Context HttpServletResponse response) throws IOException {
+		
+		contactbookService.updateContact(id, name, number);
+		response.sendRedirect("http://localhost:8080/contactbook/");	
+    }
+	
+	@GET
+	@Path("/display/{id}")
+	public View displayContact(@PathParam("id") int id) {
+		Contact contact = contactbookService.displayContact(id);
+		return new View("/update.jsp",contact,"contact");
+	} 
+	
+	@POST
+	@Path("/search")
+	public View searchContactByName(@FormParam("name") String name){
 		List<Contact> contactList = contactbookService.searchByName(name);
-		return contactList;		
-	}*/
+			return new View("/index.jsp",contactList,"contactList");
+	}  
 }
